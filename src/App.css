@@ -11,7 +11,6 @@ html {
 
 body {
     background: #eff3f7;
-    height: 100%;
 }
 
 html, body, #root, .container {
@@ -38,4 +37,27 @@ html, body, #root, .container {
     padding: 5rem;
     padding-top: 7rem;
     width: 80%;
+}
+
+@media (max-width: 924px) {
+    .movies {
+        display: flex;
+        align-items: center;
+        padding: 5rem;
+        padding-top: 7rem;
+        width: 80%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .movie {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .movie img {
+        margin: auto;
+    }
 }
