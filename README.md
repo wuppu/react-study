@@ -175,3 +175,15 @@ componentDidMount() {
     this.getMovies();
 }
 ```
+
+## Github 에 react page 올리기
+- gh-pages 설치: npm install gh-pages
+- `package.json`에서 `"homepage": "https://wuppu.github.io/react-study/"`추가 repository 이름이 소문자여야함.(소문자!)
+- 프로젝트 빌딩: npm run build
+- `"deploy": "gh-pages -d build"`script 부분에 추가하고
+- `"predeploy": "npm run build"` script 부분에 추가
+- Publish: `npm run deploy`
+- 완료
+
+- deploy는 build 폴더에 업로드함(npm run build)
+- build를 하지않고 deploy하면 predeploy가 실행됨
