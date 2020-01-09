@@ -1,0 +1,26 @@
+.nav__container {
+    position: fixed;
+    top: 5%;
+    left: 1%;
+    font-size: 1.8rem;
+    padding: 0 2rem;
+    background: white;
+    box-shadow: 
+    0 13px 27px -5px rgba(50, 50, 93, 0.25), 
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 
+    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.nav__container .nav__item {
+    text-decoration: none;
+    color: black;
+    display: block;
+    margin: 1rem 0;
+    font-weight: 500;
+}
+
+.nav__container .nav__line {
+    border: 0.07rem solid rgb(192, 192, 192);
+}

@@ -1,5 +1,10 @@
-.movie {
+.movie__link {
     width: 45%;
+    text-decoration: none;
+}
+
+.movie {
+    width: 100%;
     background: white;
     margin-bottom: 7rem;
     display: flex;
