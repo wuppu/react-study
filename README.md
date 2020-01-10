@@ -207,7 +207,77 @@ export default Navigation;
 ```
 - `Link`를 사용하고 있는 컴포넌트는 `HashRouter`태그 내부에 사용할 수 있다.
 - `BrowerRouter`는 `#`마크가 사라지지만 github pages의 업로드에 어려움이 있다.
+- `Route`의 path와 `Link`의 to를 맞춰줘야 한다.
+- `Route`의 component도 위 항목에 맞게 기입해야 한다.
+```jsx
+import About from "./routes/About";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
+import Navigation from "./components/Navigation";
 
+function App() {
+  return (
+    <HashRouter>
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/movie-detail" component={Detail} />
+    </HashRouter>
+  );
+}
+```
+```jsx
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Navigation.css";
+
+function Navigation() {
+  return (
+    <div className="nav__container">
+      <Link className="nav__item" to="/">HOME</Link>
+      <div className="nav__line"/>
+      <Link className="nav__item" to="/about">ABOUT</Link>
+    </div>
+  );
+}
+```
+- 하지만 더 좋게 보이기 위해서는 path를 분리시켜주는 것이 좋다.
+- `props`로 id를 받고 이를 path에 넣주는 방식이다.(path="/movie/:id", pathname: \`/movie/${id}\`)
+```jsx
+function App() {
+  return (
+    <HashRouter>
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/movie/:id" component={Detail} />
+    </HashRouter>
+  );
+}
+```
+```jsx
+<Link className="movie__link"
+  to={{
+    pathname: `/movie/${id}`,
+    state: {
+      year,
+      title,
+      summary,
+      poster,
+      genres
+    }
+  }}
+>
+```
+
+## Redux
+- 지금 까지의 문제점
+  - 페이지를 이동할 때마다 컴포넌트에 있는 state가 유지되지 않고 초기화되는 문제점이 있다.
+  - 그래서 페이지를 돌아갈 때마다 다시 데이터를 불러오는 경우가 생긴다.
+- 해결 방안
+  - state를 스크린 밖에 있도록 도와주는 기능이 필요하다.
+  - ex) 영화 리스트를 다른 곳에 저장해 놨다가, 다시 돌아왔을 때 로딩을 다시 할 필요가 없도록 한다.
+- Redux가 이러한 기능을 가지고 있고 도와준다.
 
 ## Github 에 react page 올리기
 - gh-pages 설치: npm install gh-pages
