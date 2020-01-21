@@ -16,6 +16,8 @@
 - 소스코드에는 보이지 않는다.
 - React는 소스코드에 처음부터 HTML에 넣지 않고, HTML에서 HTML을 추가하거나 제거하는 방법을 알고 있다.
 - 빈 HTML파일을 불러오고, react가 HTML을 밀어넣는다. ("root"에 밀어넣는다.)
+- Virtual DOM에 그리고 실제 DOM과 최소로 비교하여 수정된 부분만 밀어넣는 방식이다.
+- 전부 업데이트하지 않고 일부분만 업데이트를 한다는 것이다.
 - 이러한 특징들이 빠르게 작용한다.
 
 ## Component
@@ -42,6 +44,51 @@ export default App;
 ```
 
 ## 필기
+
+- `import fs from "fs";` == `const fs = require("fs");`
+- 컴포넌트를 반환할 때에는 하나의 요소로 감싸서 반환해야 한다. 하지만 react에서 이를 방지하여, `<Fragment>`태그를 만들었고 이는 `<div>`를 렌더링을 생략할 수 있게 한다.
+- `condition ? "true" : null` == `condition && "true"`
+- CSS를 JSON으로 작성할 수 있다.(JSON에는 `-`을 사용할 수 없기 때문에 camelCase로 작성한다. `background-color` == `backgroundColor`, `-`바로 뒤 문자는 대문자, `-ms`는 예외로 `ms`로 작성한다.)
+- 태그를 열었을 경우에는 무조건 닫아줘야 한다.(`<input>`이 아니고 `<input />`)
+- 주석을 사용할 때에는 자바스크립트라는 명시하므로, brace(`{}`)를 사용해야 한다.
+- Javascript - `...`전개 연산자는 뒤에 위치한 배열 값을 그래도 꺼내서 현재 배열에 복사하는 것이다.
+- 임의의 화살표 메서드에 파라미터가 있을 때는 사용할 때 내부에서 화살표 함수를 새로 만들어 사용하면 된다.
+
+```jsx
+handleRemove = (index) => {
+    const {names} = this.state;
+    
+    // names에서 index만 제외하고 slice해서 새로운 배열을 만든다.
+	this.setState({
+        names: [
+            ...names.slice(0, index),
+            ...names.slice(index + 1, names.length)
+        ]
+    });   
+}
+
+render() {
+	const nameList = this.state.names.map(
+        (name, index) => (
+            // 새로운 화살표 함수를 사용한 이유는 index 값을 함수의 인자로 설정하기 위해서 이다.
+            // 이처럼 임의 메서드에 파라미터가 있을 때는 사용할 때 내부에서 함수를 새로 만들면 된다.
+    		<li key={index} onDoubleClick={() => handleRemove(index)}>{name}</li>
+    	)                              
+	);
+}
+```
+
+- 배열 내장함수인 `filter()`함수를 사용하면 보다 쉽게 구현할 수 있다.
+```jsx
+handleRemove = (index) => {
+    const {names} = this.state;
+    this.setState({
+        names: names.filter((name, i) => i !== index)
+    });
+}
+```
+
+
 
 - `map` 활용
 - `map` 은 return 데이터는 array이다.
@@ -133,7 +180,8 @@ minus = () => {
 };
 ```
 - **매 순간 `setState()`를 호출할 때 마다 react는 새로운 state와 함께 render function을 호출한다.**
-- Component life cycle
+- state 배열을 가지고 있을 때, `push()`가 아니라 `concat()`을 사용해야 한다.(`push()`는 기존의 배열 자체가 변형되므로 이는 state목적에 맞지 않는 사용 방법이다. 따라서 자동으로 리렌더링을 트리거하지 않기 때문에 오류가 발생한다. 하지만 `concat()`은 기존의 항목에 추가할 항목을 추가하여 새로운 배열을 만드므로 오류 없이 작동한다.)
+- **Component life cycle**
   - Mounting: 생성됬을 때
     - constructor(): class가 생성될 때, 호출된다.
     - componentDidMount(): render가 끝났을 때, 호출된다.
@@ -290,3 +338,14 @@ function App() {
 
 - deploy는 build 폴더에 업로드함(npm run build)
 - build를 하지않고 deploy하면 predeploy가 실행됨
+
+
+
+## 참고 도서
+
+### 실무에서 알아야 할 기술은 따로 있다! 리액트를 다루는 기술 
+
+출판사: 길벗
+
+지은이: 김민준
+
