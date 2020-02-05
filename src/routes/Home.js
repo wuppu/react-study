@@ -6,7 +6,7 @@ import "./Home.css";
 class Home extends Component {
   state = {
     isLoading: true,
-    movie: []
+    movies: []
   };
   getMovies = async () => {
     const {
